@@ -43,24 +43,41 @@ def checkWin(value):
         return False
 
 def isBoardFull(value):
-    if(' ' not in value):
+    """
+    if(" " not in value):
         return True
     else:
         return False
+    """
+    for i in range(1,10):
+        if value[i] is " ":
+            return False
+    else:
+        return True
 def menu():
     print("1. Play Again \n2. Exit")
-    choice = int(input("Enter the choice"))
+    choice = int(input("Enter the choice : "))
     if choice == 1:
         getInput()
-
+def replay():
+    print("1. Play Again \n2. Exit")
+    choice = int(input("Enter the choice : "))
+    if choice == 1:
+        return True
+    else:
+        return False
+flag = 0
 def getInput():
+    global flag
     value = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']
     printBoard(value)
     playerTurn = chooseFirst()  #player 1 cross"X" and player 2 "O"
     while(True):
-        mark = input("Player "+str(playerTurn)+" Enter the number in the keypad to mark")
-        if  mark not in ['1','2','3','4','5','6','7','8','9'] or spaceCheck(value, int(mark)) == False  :
-            print("Please re-enter")
+        if flag == 1:
+            break
+        mark = input("Player "+str(playerTurn)+" Enter the number in the keypad to mark : ")
+        if  mark not in ['1','2','3','4','5','6','7','8','9'] or (spaceCheck(value, int(mark)) == False):
+            print("Please re-enter ")
             continue
         mark = int(mark)
         if playerTurn == 1:
@@ -71,24 +88,24 @@ def getInput():
         if checkWin(value)==True :
             print("Player ",playerTurn, " is the winner\n")
             print("1. Play Again \n2. Exit")
-            choice = int(input("Enter the choice"))
+            choice = int(input("Enter the choice : "))
             if choice == 1:
                 getInput()
             else:
+                print("Exiting...")
                 break
-        if isBoardFull(value) :
-                print("DRAW\n")
-                print("1. Play Again \n2. Exit")
-                choice = int(input("Enter the choice"))
-                if choice == 1:
-                    getInput()
-                else:
-                	break
         if playerTurn ==1 :
             playerTurn =2
         else :
             playerTurn =1
-
-
+        if (isBoardFull(value)):
+            print("Draw\n")
+            print("1. Play Again \n2. Exit")
+            choice = int(input("Enter the choice : "))
+            if choice == 1:
+                getInput()
+            else:
+                print("Exiting...")
+                flag = 1
+                break
 getInput()
-
